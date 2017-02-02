@@ -11,5 +11,8 @@ print(n)
 '''
 
 #2
-
-
+'''
+a = int(input('Введите a: '))
+b = int(input('Введите b: '))
+print('a =', (a+b)-a, 'b =', (a+b)-b)
+'''
