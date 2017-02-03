@@ -9,9 +9,9 @@ for i in num:
 print(n)
 
 #2
-a = int(input('Введите a: '))
-b = int(input('Введите b: '))
-print('a =', (a+b)-a, 'b =', (a+b)-b)
+a = input('Введите a: ')
+b = input('Введите b: ')
+print('a = {0}, b = {1}'.format(b, a))
 
 #3
 import math
