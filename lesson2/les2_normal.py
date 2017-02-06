@@ -93,17 +93,3 @@ for i in list:
         uniq.append(i)
 
 print(uniq)
-
-
-
-
-
-
-
-
-
-
-
-
-
-
