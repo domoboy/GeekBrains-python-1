@@ -11,7 +11,9 @@ print(n)
 #2
 a = input('Введите a: ')
 b = input('Введите b: ')
-print('a = {0}, b = {1}'.format(b, a))
+
+a, b = b, a
+print('a = {0}, b = {1}'.format(a, b))
 
 #3
 import math
