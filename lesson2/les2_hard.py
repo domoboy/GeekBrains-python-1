@@ -3,21 +3,24 @@
 #1
 import re
 
-# y = kx - b
-equation = 'y = -12x + 67'
+equation = 'y = -12x + 11111140.2121'
 x = 2.5
 
-equation = equation.replace(' ', '')
+eq = equation.replace(' ', '')
 
-k = (re.compile('[+-]*\d*x+').findall(equation))[0][:-1]
-if not len(k): k = 1
-elif k == '-': k = -1
-else: k = int(k)
+foo = (re.compile('[+-]?\d*[.]?\d*x').findall(eq))[0][:-1]
+if not len(foo):
+    k = 1.0
+elif foo == '-':
+    k = -1.0
+else:
+    k = float(foo)
 
-b = (re.compile('[+-]?\d*[^x]').findall(equation))
-'''
-y = k * x - b
+bar = (re.compile('[^y=]\d*[.]?\d*x?').findall(eq))
+for value in bar:
+    if value.find('x') == -1:
+        b = float(value)
 
-print('{}\nпри x = {}\ny = {}'.format(equation, x, y))
-'''
-print(b)
+y = k * x + b
+
+print('Прямая задана уравнением:\n{}\nпри x = {}\ny = {}'.format(equation, x, y))
