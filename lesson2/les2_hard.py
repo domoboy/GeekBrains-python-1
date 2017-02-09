@@ -87,14 +87,27 @@ years.clear()
 
 N = 5
 
-L = []
+def_list = []
+list_floors = []
+rooms = 0
+room_n = 0
+
 
 for n in range(N):
-    if n == 0:
-        continue
-    L.append([[n]*n]*n)
-  
-print(L)
+    def_list.append([[0]*n]*n)
+
+for part in def_list:
+    for floor in part:
+        list_floors.append(floor)
+        rooms += len(floor)
+
+for floor in list_floors:
+    for room in floor:
+        room = room_n + 1
+        room_n += 1
+
+print(list_floors)
+print(rooms)
 
 
 
