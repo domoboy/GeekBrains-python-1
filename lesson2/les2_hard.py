@@ -1,6 +1,6 @@
 #lesson2, hard
 
-
+'''
 #1------------------------------
 import re
 
@@ -81,6 +81,54 @@ print(date)
 days.clear()
 months.clear()
 years.clear()
-
+'''
 
 #3------------------------------
+
+N = 5
+
+L = []
+
+for n in range(N):
+    if n == 0:
+        continue
+    L.append([[n]*n]*n)
+  
+print(L)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
