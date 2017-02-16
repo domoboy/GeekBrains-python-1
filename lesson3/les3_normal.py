@@ -5,17 +5,20 @@
 def fibonacci(n, m):
     '''
     возвращает ряд фибоначчи
-    от n до m
+    от n до m включительно
     '''
+    fib = []
+    a, b = 0, 1
+    for num in range(m):
+        fib.append(b)
+        a, b = b, a+b
     n -= 1
-    fib = [1, 1]
-    for i in range(m):
-        fib.append(fib[len(fib)-1] + fib[len(fib)-2])
     res = [fib[i] for i in range(n, m)]
     del fib
     print(res)
+    return res
 
-fibonacci(2, 10)
+fibonacci(5, 10)
 
 #2---------------------------
 
@@ -48,5 +51,33 @@ def sort_to_max(un_list):
 sort_to_max([2, 10, -12, 2.5, 20, -11, 4, 4, 0])
 
 #3---------------------------
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
