@@ -1,6 +1,6 @@
 #lesson2, hard
 
-'''
+
 #1------------------------------
 import re
 
@@ -81,18 +81,30 @@ print(date)
 days.clear()
 months.clear()
 years.clear()
-'''
+
 
 #3------------------------------
 
-n = 5
+N = 11
 
-house = [[x]*x for x in range(n) for y in range(x)]
+house = [list(enumerate([
+                         ['room']*x for x in range(99) for y in range(x)
+                         ], start = (i+1))
+              ) for i in range(1)
+        ][0]
 
-print(house)
+room = 1
+for floor in house:
+    for i in range(len(floor[1])):
+        floor[1].remove('room')
+        floor[1].append(room)
+        room += 1
 
-
-
+for floor in house:
+    for rooms in floor[1]:
+        if rooms == N:
+            print('Квартира № %s\nЭтаж %s, %s-я слева'%
+                  (N, floor[0], floor[1].index(N) + 1))
 
 
 
