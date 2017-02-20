@@ -5,7 +5,7 @@
 def equfract():
     #user_input = input('Введите выражение: ')
 
-    eq = '-3/5 + 6 7/8'
+    eq = '-2 3/7 - -5 7/10'
 
     ones_oper = False
     sign = False
@@ -42,10 +42,54 @@ def equfract():
 
         dem_part = (int(operands[1].split('/')[1]) if len(operands) == 2 else
                     int(operands[0].split('/')[1]))
-        
-        
-    
-    print('Целая часть:%s Числитель:%s Знаменатель:%s'%(int_part, num_part, dem_part))
-    print('%s Знак %s'%(operands, sign))
+    else:
+        operand1 = (operands[0].split(' ') if operands[0].find(' ') != -1 else
+                    operands[0].split('/'))
 
+        operand2 = (operands[1].split(' ') if operands[1].find(' ') != -1 else
+                    operands[1].split('/'))
+
+        print('%s %s'%(operand1, operand2))
+        
+        int_part = int(operand1[0]) if len(operand1) == 2 else 1
+
+        num_part = (int(operand1[1].split('/')[0]) if len(operand1) == 2 else
+                    int(operand1[0].split('/')[0]))
+
+        dem_part = (int(operand1[1].split('/')[1]) if len(operand1) == 2 else
+                    int(operand1[0].split('/')[1]))
+
+        int_part2 = int(operand2[0]) if len(operand2) == 2 else 1
+
+        num_part2 = (int(operand2[1].split('/')[0]) if len(operand2) == 2 else
+                    int(operand2[0].split('/')[0]))
+
+        dem_part2 = (int(operand2[1].split('/')[1]) if len(operand2) == 2 else
+                    int(operand2[0].split('/')[1]))
+        
+         
+    print('Целая часть:%s Числитель:%s Знаменатель:%s'%
+          (int_part, num_part, dem_part))
+    print('Целая часть:%s Числитель:%s Знаменатель:%s'%
+          (int_part2, num_part2, dem_part2))
+    
 equfract()
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
