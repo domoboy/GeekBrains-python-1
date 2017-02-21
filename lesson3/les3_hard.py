@@ -1,95 +1,89 @@
-#lesson 3, hard
+#lesson3, hard
 
-#1------------------------
+#1------------------------------
 
-def equfract():
-    #user_input = input('Введите выражение: ')
+def fract(num):
+    '''
+    приведение дробной части
+    '''
+    if num[0] and num[2]:
+        num[1] = (num[0] * num[2] + num[1] if num[0] > 0 else
+                  num[0] * num[2] - num[1])
+        num[0] = False
 
-    eq = '-2 3/7 - -5 7/10'
+    return [n for n in num if n]
+ 
+def equfract(*n):
+   '''
+   вычисление дробей
+   '''
+   if len(n) == 3:
+       sign = n[len(n)-1]
+       num1 = fract([num for num in n[0].values()])
+       num2 = fract([num for num in n[1].values()])
+       print(num1, num2)
+       
+   if len(n) == 1:
+       num = fract([num for num in n[0].values()])
+       print(num)
 
-    ones_oper = False
+def discharge(li):
+    '''
+    выделение числителя, знаменателя
+    и целой части
+    '''
+    #int: целая часть
+    #num: числитель
+    #dem: знаменатель
+    
+    num = {'int': False, 'num': False, 'dem': False}
+
+    if len(li) == 1:
+        num['int'] = int(li[0])
+
+    if len(li) == 2 and ~li[1].find('/'):
+        num['int'] = int(li[0])
+        num['num'] = int(li[1].split('/')[0])
+        num['dem'] = int(li[1].split('/')[1])
+
+    if len(li) == 2 and li[1].isdigit():
+        num['num'] = int(li[0])
+        num['dem'] = int(li[1])
+
+    return num
+
+def formatin():
+    '''
+    форматирование входной строки
+    '''
+    usr_in = '-3 2/3 + 1 1/2'
+    usr_in = usr_in.strip()
+
+    is_one_operand = False
     sign = False
 
-    int_part, int_part2 = False, False
-    num_part, num_part2 = False, False
-    dem_part, dem_part2 = False, False
+    plus = usr_in.find(' + ')
+    minus = usr_in.find(' - ')
 
-    plus = eq.find(' + ')
-    minus = eq.find(' - ')
-
-    if plus != -1:
-        sign = (eq)[plus+1]
-    elif minus != -1:
-        sign = (eq)[minus+1]
-
-    if sign:
-        operands = eq.split(sign)    
+    if not ~minus and not ~plus:
+        is_one_operand = True
     else:
-        operands = eq.split(' ')
-        ones_oper = True
-
-    operands = [oper.strip() for oper in operands]
-
-    if len(operands) > 2:
-        print('Ошибка при вводе: лишний операнд\n%s'%(operands))
-        return
-
-    if ones_oper:
-        int_part = int(operands[0]) if len(operands) == 2 else 1
-
-        num_part = (int(operands[1].split('/')[0]) if len(operands) == 2 else
-                    int(operands[0].split('/')[0]))
-
-        dem_part = (int(operands[1].split('/')[1]) if len(operands) == 2 else
-                    int(operands[0].split('/')[1]))
+        sign = usr_in[minus+1] if ~minus else usr_in[plus+1]
+        
+    if is_one_operand:
+        oper = (usr_in.split(' ') if ~usr_in.find(' ') else
+                usr_in.split('/'))
+        num = discharge(oper)
+        return equfract(num) 
     else:
-        operand1 = (operands[0].split(' ') if operands[0].find(' ') != -1 else
-                    operands[0].split('/'))
+        opers = usr_in.split(' ' + sign + ' ')
+        oper1 = (opers[0].split(' ') if ~opers[0].find(' ') else
+                 opers[0].split('/'))
+        oper2 = (opers[1].split(' ') if ~opers[1].find(' ') else
+                 opers[1].split('/'))
+        num1 = discharge(oper1)
+        num2 = discharge(oper2)
+        return equfract(num1, num2, sign)    
 
-        operand2 = (operands[1].split(' ') if operands[1].find(' ') != -1 else
-                    operands[1].split('/'))
-
-        print('%s %s'%(operand1, operand2))
-        
-        int_part = int(operand1[0]) if len(operand1) == 2 else 1
-
-        num_part = (int(operand1[1].split('/')[0]) if len(operand1) == 2 else
-                    int(operand1[0].split('/')[0]))
-
-        dem_part = (int(operand1[1].split('/')[1]) if len(operand1) == 2 else
-                    int(operand1[0].split('/')[1]))
-
-        int_part2 = int(operand2[0]) if len(operand2) == 2 else 1
-
-        num_part2 = (int(operand2[1].split('/')[0]) if len(operand2) == 2 else
-                    int(operand2[0].split('/')[0]))
-
-        dem_part2 = (int(operand2[1].split('/')[1]) if len(operand2) == 2 else
-                    int(operand2[0].split('/')[1]))
-        
-         
-    print('Целая часть:%s Числитель:%s Знаменатель:%s'%
-          (int_part, num_part, dem_part))
-    print('Целая часть:%s Числитель:%s Знаменатель:%s'%
-          (int_part2, num_part2, dem_part2))
-    
-equfract()
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+formatin()
 
