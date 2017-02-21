@@ -4,28 +4,33 @@
 
 def fract(num):
     '''
-    приведение дробной части
+    приведение целой и дробной части
     '''
     if num[0] and num[2]:
         num[1] = (num[0] * num[2] + num[1] if num[0] > 0 else
                   num[0] * num[2] - num[1])
         num[0] = False
-
+    
     return [n for n in num if n]
  
 def equfract(*n):
-   '''
-   вычисление дробей
-   '''
-   if len(n) == 3:
-       sign = n[len(n)-1]
-       num1 = fract([num for num in n[0].values()])
-       num2 = fract([num for num in n[1].values()])
-       print(num1, num2)
-       
-   if len(n) == 1:
-       num = fract([num for num in n[0].values()])
-       print(num)
+    '''
+    вычисление дробей
+    '''
+    if len(n) == 3:
+        sign = n[len(n)-1]
+        num1 = fract([n[0]['int'], n[0]['num'], n[0]['dem']])
+        num2 = fract([n[1]['int'], n[1]['num'], n[1]['dem']])
+        print(num1, num2)
+
+        if len(num1) == len(num2):
+           res = list(zip(num1, num2))
+           print(res)
+
+                  
+    if len(n) == 1:
+        num = fract([n[0]['int'], n[0]['num'], n[0]['dem']])
+        print(num)
 
 def discharge(li):
     '''
@@ -56,7 +61,7 @@ def formatin():
     '''
     форматирование входной строки
     '''
-    usr_in = '-3 2/3 + 1 1/2'
+    usr_in = '2 + 2'
     usr_in = usr_in.strip()
 
     is_one_operand = False
