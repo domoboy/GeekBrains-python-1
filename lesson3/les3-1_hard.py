@@ -2,7 +2,7 @@
 
 #1------------------------------
 
-user_input = '-2 2/3 - 2'
+user_input = '5 2/3 - 2'
 
 def nod(a, b):
     '''
@@ -35,7 +35,7 @@ def defract(num):
     if not num[0] % num[1]:
         res = int(num[0] / num[1])
 
-    elif abs(num[0]) > num[1]:
+    elif abs(num[0]) > abs(num[1]):
         res = [int(num[0] / num[1]), abs(num[0]) % num[1], num[1]]
 
         n = nod(abs(res[1]), abs(res[2]))
@@ -89,6 +89,7 @@ def calcfract(*n):
                    res = [res, group[1][0] * group[1][1]]
 
         else:
+            print(num1, num2)
             if sign == '+':
                 res = ([num1[0] * num2[1] + num2[0], num2[1]] if
                        len(num1) == 1 else
@@ -96,7 +97,8 @@ def calcfract(*n):
             if sign == '-':
                 res = ([num1[0] * num2[1] - num2[0], num2[1]] if
                        len(num1) == 1 else
-                       [num2[0] * num1[1] - num1[0], num1[1]])
+                       [-(num2[0] * num1[1] - num1[0]), num1[1]])
+                print(len(num1))
                   
     if len(n) == 1:
         res = fract([n[0]['int'], n[0]['num'], n[0]['dem']])
