@@ -1,8 +1,8 @@
-#lesson3, hard
+#lesson3-1, hard
 
-#1------------------------------
 
-user_input = '5 2/3 - 2'
+user_input = '-2/3 - -2'
+
 
 def nod(a, b):
     '''
@@ -12,6 +12,7 @@ def nod(a, b):
     while b:
         a, b = b, a%b
     return a
+
         
 def formatout(num):
     '''
@@ -21,12 +22,13 @@ def formatout(num):
         return num
 
     if len(num) == 2:
-        res = '%s/%s'%(num[0], num[1])
+        res = '%s/%s' % (num[0], num[1])
 
     if len(num) == 3:
-        res = '%s %s/%s'%(num[0], num[1], num[2])
+        res = '%s %s/%s' % (num[0], num[1], num[2])
         
     return res
+
     
 def defract(num):
     '''
@@ -50,6 +52,7 @@ def defract(num):
         
     return res
 
+
 def fract(num):
     '''
     приведение к дроби
@@ -60,6 +63,7 @@ def fract(num):
         num[0] = False
     
     return [n for n in num if n]
+
  
 def calcfract(*n):
     '''
@@ -89,7 +93,6 @@ def calcfract(*n):
                    res = [res, group[1][0] * group[1][1]]
 
         else:
-            print(num1, num2)
             if sign == '+':
                 res = ([num1[0] * num2[1] + num2[0], num2[1]] if
                        len(num1) == 1 else
@@ -98,7 +101,6 @@ def calcfract(*n):
                 res = ([num1[0] * num2[1] - num2[0], num2[1]] if
                        len(num1) == 1 else
                        [-(num2[0] * num1[1] - num1[0]), num1[1]])
-                print(len(num1))
                   
     if len(n) == 1:
         res = fract([n[0]['int'], n[0]['num'], n[0]['dem']])
@@ -109,8 +111,9 @@ def calcfract(*n):
         res = defract(res)
         res = formatout(res)
 
-    print('Ответ: %s'%(res))
+    print('Ответ: %s' % (res))
     return res
+
 
 def discharge(li):
     '''
@@ -137,6 +140,7 @@ def discharge(li):
 
     return num
 
+
 def formatin(usr_in):
     '''
     форматирование входной строки
@@ -154,7 +158,7 @@ def formatin(usr_in):
     else:
         sign = usr_in[minus+1] if ~minus else usr_in[plus+1]
 
-    print('Выражение: %s'%(usr_in))
+    print('Выражение: %s' % (usr_in))
         
     if is_one_operand:
         oper = (usr_in.split(' ') if ~usr_in.find(' ') else
@@ -170,6 +174,7 @@ def formatin(usr_in):
         num1 = discharge(oper1)
         num2 = discharge(oper2)
         return calcfract(num1, num2, sign)    
+
 
 formatin(user_input)
 
