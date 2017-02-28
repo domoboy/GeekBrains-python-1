@@ -1,8 +1,7 @@
-#lesson2, hard
+# lesson2, hard
 
-
-#1------------------------------
 import re
+# 1------------------------------
 
 equation = 'y = -12x + 11111140.2121'
 x = 2.5
@@ -24,12 +23,13 @@ for value in bar:
 
 y = k * x + b
 
-print('Прямая задана уравнением:\n{}\nпри x = {}\ny = {}'.format(equation, x, y))
+print('Прямая задана уравнением:\n%s\nпри x = %s\ny = %s' %
+      (equation, x, y))
 
 
-#2------------------------------
+# 2------------------------------
 
-#date = 'dd.mm.yyyy'
+# date = 'dd.mm.yyyy'
 
 date = input('Введите дату в формате: dd.mm.yyyy\n')
 
@@ -66,13 +66,13 @@ if isinstance(d, dict):
         day = int(d['day'])
         month = int(d['month'])
         year = int(d['year'])
-        
+
         if not (day in days and
                 month in months and
                 year in years):
             print(ERROR_MSG_3, REQUIRES_MSG)
         elif (day == 31 and
-              month in (2,4,6,9,11)):
+              month in (2, 4, 6, 9, 11)):
             print(ERROR_MSG_4)
         else:
             print(CORRECTLY_MSG)
@@ -83,15 +83,14 @@ months.clear()
 years.clear()
 
 
-#3------------------------------
+# 3------------------------------
 
 N = 11
 
-house = [list(enumerate([
-                         ['room']*x for x in range(99) for y in range(x)
-                         ], start = (i+1))
-              ) for i in range(1)
-        ][0]
+house = [list(enumerate([['room']*x for
+              x in range(99) for
+              y in range(x)], start = (i + 1))) for
+              i in range(1)][0]
 
 room = 1
 for floor in house:
@@ -103,7 +102,7 @@ for floor in house:
 for floor in house:
     for rooms in floor[1]:
         if rooms == N:
-            print('Квартира № %s\nЭтаж %s, %s-я слева'%
+            print('Квартира № %s\nЭтаж %s, %s-я слева' %
                   (N, floor[0], floor[1].index(N) + 1))
 
 

@@ -1,6 +1,8 @@
-#lesson 3, normal
+# lesson 3, normal
 
-#1---------------------------
+import math
+# 1---------------------------
+
 
 def fibonacci(n, m):
     '''
@@ -20,7 +22,8 @@ def fibonacci(n, m):
 
 fibonacci(5, 10)
 
-#2---------------------------
+# 2---------------------------
+
 
 def sort_to_max(unsort_list):
     '''
@@ -44,13 +47,14 @@ def sort_to_max(unsort_list):
             if elem == min_num(work_list):
                 sorted_list.append(elem)
                 work_list.remove(elem)
-    print('Список %s преобразован:\n%s'%(unsort_list, sorted_list))
+    print('Список %s преобразован:\n%s' % (unsort_list, sorted_list))
     del work_list
     return sorted_list
 
 sort_to_max([2, 10, -12, 2.5, 20, -11, 4, 4, 0])
 
-#3---------------------------
+# 3---------------------------
+
 
 def alt_filter(func, itr):
     '''
@@ -68,11 +72,10 @@ def alt_filter(func, itr):
 
 alt_filter(lambda x: x > 5, {2, 10, -12, 2.5, 20, -11, 4, 4, 0})
 
-#4---------------------------
-
-import math
+# 4---------------------------
 
 A1, A2, A3, A4 = (2, 3), (0, 2), (4, 1), (6, 2)
+
 
 def isparall(a, b, c, d):
     '''
@@ -80,8 +83,9 @@ def isparall(a, b, c, d):
     '''
     p1 = False
     p2 = False
-    
-   #Противополжные стороны параллельны и равны
+    '''
+    Противополжные стороны параллельны и равны
+    '''
     ab = math.sqrt((b[0] - a[0])**2 + (b[1] - a[1])**2)
     cb = math.sqrt((b[0] - c[0])**2 + (b[1] - c[1])**2)
     cd = math.sqrt((d[0] - c[0])**2 + (d[1] - c[1])**2)
@@ -91,8 +95,9 @@ def isparall(a, b, c, d):
         p1 = True
     else:
         print('Противоположные стороны НЕ равны')
-    
-   #Диагонали O1 и O2 в точках пересечения делятся пополам и равны
+    '''
+    Диагонали O1 и O2 в точках пересечения делятся пополам и равны
+    '''
     hO1 = ((a[0] + c[0])/2, (a[1] + c[1])/2)
     hO2 = ((b[0] + d[0])/2, (b[1] + d[1])/2)
     if hO1 == hO2:
@@ -102,8 +107,8 @@ def isparall(a, b, c, d):
         print('Половины диагоналей НЕ равны')
 
     if p1 and p2:
-        print('Вершины A1%s, A2%s, A3%s, A4%s\nобразуют параллелограмм'%
-          (a, b, c, d))
+        print('Вершины A1%s, A2%s, A3%s, A4%s\nобразуют параллелограмм' %
+              (a, b, c, d))
     else:
         print('Вершины не образуют параллелограмм')
 

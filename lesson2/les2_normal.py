@@ -1,20 +1,21 @@
-#lessson2, normal
+# lessson2, normal
 
-
-#1
 import math
+import random
+
+# 1
 
 example_list = [2, -5, 8, 9, -25, 25, 4]
 new_list = []
 
 for i in example_list:
-    if i>0 and (math.sqrt(i) - int(math.sqrt(i))) == 0:
+    if i > 0 and (math.sqrt(i) - int(math.sqrt(i))) == 0:
             new_list.append(int(math.sqrt(i)))
 
 print(new_list)
 
 
-#2
+# 2
 event_date = '03.11.1986'
 
 days = [
@@ -70,11 +71,11 @@ day = days[int(date_list[0])-1]
 month = months[int(date_list[1])-1]
 year = int(date_list[2])
 
-print('Формат даты: {} - изменён\nРезультат форматирования: {} {} {} года'.format(event_date, day, month, year))
+print('Формат даты: %s - изменён\nРезультат форматирования: %s %s %s года' %
+      (event_date, day, month, year))
 
 
-#3
-import random
+# 3
 
 n_elem = int(input('Введите количество элементов в списке:\n'))
 
@@ -85,7 +86,7 @@ while len(list) < n_elem:
 print(list)
 
 
-#4
+# 4
 uniq = []
 
 for i in list:
