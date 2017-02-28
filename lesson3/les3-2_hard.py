@@ -19,8 +19,7 @@ def couple(header, values):
     values
     '''
     nlist = [list(zip(header, value)) for value in values]
-    nlist = [{elem[0]: elem[1] for elem in elems} for
-              elems in nlist]
+    nlist = [{elem[0]: elem[1] for elem in elems} for elems in nlist]
     return nlist
 
 
@@ -45,10 +44,11 @@ def merge(file1, file2):
     for el in personal:
         for e in hourse:
             if (el['Фамилия'] == e['Фамилия'] and
-                el['Имя'] == e['Имя']):
+               el['Имя'] == e['Имя']):
                 el.update(e)
 
     return personal
+
 
 def calc_pay(tabl):
     '''
@@ -61,20 +61,31 @@ def calc_pay(tabl):
         h_pay = int(pay / h_need)
 
         if h_fact == h_need:
-            person['Расчёт'] = pay
+            person['Расчёт'] = '%s' % (pay)
         elif h_fact > h_need:
-            person['Расчёт'] = pay + (h_fact - h_need) * (h_pay*2)
+            person['Расчёт'] = '%s' % (pay + (h_fact - h_need) * (h_pay*2))
         else:
-            person['Расчёт'] = h_pay * h_fact            
+            person['Расчёт'] = '%s' % (h_pay * h_fact)
 
-        return tabl                    
-        
+    return tabl
+
 
 personal = calc_pay(merge('workers.txt', 'hourse_of.txt'))
 
 with open('calc_pay.txt', 'w', encoding='UTF-8') as pay_list:
-    pay_list.write(personal[0]['Имя'] + '\n' + personal[0]['Фамилия'])
+    header = []
+    for key in personal[0].keys():
+        if key == 'Фамилия':
+            header.insert(0, key)
+        if key == 'Имя':
+            header.insert(1, key)
+        if key == 'Расчёт':
+            header.insert(2, key)
+    header = '%s    %s    %s\n' % (header[0], header[1], header[2])
+    body = '\n'.join(['%s   %s' %
+                      (pers['Фамилия'] + ' ' + pers['Имя'],
+                       pers['Расчёт']) for pers in personal])
 
+    print(header + body)
 
-
-
+    pay_list.write(header + body)
