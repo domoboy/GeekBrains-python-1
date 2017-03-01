@@ -19,6 +19,10 @@ def extract_fruits(file):
     return fruits
 
 def sort_fruits(fr_list):
+    '''
+    В зависимости от первой буквы названия
+    фрукта, записывает его в соответсвующий файл
+    '''
     for fruit in fr_list:
         for key, value in fruit.items():
             with open('fruits_' + key + '.txt',
@@ -26,6 +30,5 @@ def sort_fruits(fr_list):
 
                 fr_sort.write('\n\n'.join(value))
 
-fruits = extract_fruits('fruits.txt')
-sort_fruits(fruits)
+sort_fruits(extract_fruits('fruits.txt'))
 
