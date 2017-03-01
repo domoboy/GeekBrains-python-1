@@ -2,10 +2,11 @@
 
 alphabet = tuple(map(chr, range(ord('А'), ord('Я')+1)))
 
+
 def extract_fruits(file):
     '''
     Возвращает сортированный по алфавиту
-    список фруктов из file
+    список cловарей из фруктов
     '''
     with open(file, 'r', encoding='UTF-8') as fr:
         fruits = []
@@ -17,6 +18,7 @@ def extract_fruits(file):
                 fruits.append({letter: fr_sorted})
 
     return fruits
+
 
 def sort_fruits(fr_list):
     '''
@@ -31,4 +33,3 @@ def sort_fruits(fr_list):
                 fr_sort.write('\n\n'.join(value))
 
 sort_fruits(extract_fruits('fruits.txt'))
-
