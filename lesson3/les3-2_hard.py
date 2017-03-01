@@ -63,7 +63,7 @@ def calc_pay(tabl):
         if h_fact == h_need:
             person['Расчёт'] = '%s' % (pay)
         elif h_fact > h_need:
-            person['Расчёт'] = '%s' % (pay + (h_fact - h_need) * (h_pay*2))
+            person['Расчёт'] = '%s' % (pay + (h_fact-h_need) * h_pay*2)
         else:
             person['Расчёт'] = '%s' % (h_pay * h_fact)
 
@@ -73,18 +73,10 @@ def calc_pay(tabl):
 personal = calc_pay(merge('workers.txt', 'hourse_of.txt'))
 
 with open('calc_pay.txt', 'w', encoding='UTF-8') as pay_list:
-    header = []
-    for key in personal[0].keys():
-        if key == 'Фамилия':
-            header.insert(0, key)
-        if key == 'Имя':
-            header.insert(1, key)
-        if key == 'Расчёт':
-            header.insert(2, key)
-    header = '%s    %s    %s\n' % (header[0], header[1], header[2])
-    body = '\n'.join(['%s   %s' %
-                      (pers['Фамилия'] + ' ' + pers['Имя'],
-                       pers['Расчёт']) for pers in personal])
+    header = '{:<10}{:<12}{:<10}\n'.format('Имя', 'Фамилия', 'Расчёт')
+    body = '\n'.join(['{:<10}{:<12}{:<10}'.format(pers['Имя'], pers['Фамилия'],
+                                                  pers['Расчёт'])
+                      for pers in personal])
 
     print(header + body)
 
