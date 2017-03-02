@@ -39,38 +39,27 @@ result1 = ' '.join(result1)
 # 2------------------------------------------------
 
 i = 0
-last_append_index = 0
+last_index_found = 0
 alt_found = []
 ispattern = False
 
 for letter in line:
     prev_letter = line[line.index(letter, i)-1]
     if (letter.isupper() and
-        prev_letter.islower() and
-        last_append_index != i and
-        not ispattern):
+       prev_letter.islower() and
+       last_index_found != i and
+       not ispattern):
         ispattern = True
         alt_found.append(prev_letter)
-           
+
     if (letter.islower() and
-          prev_letter.isupper() and
-          ispattern):
+       prev_letter.isupper() and
+       ispattern):
         ispattern = False
-        last_append_index = i+1
+        last_index_found = i+1
         alt_found.append(letter)
     i += 1
 
 result2 = ' '.join(alt_found)
 
-print('well done!' if result1 == result2 else 'error')
-
-
-
-
-
-
-
-
-
-
-
+print('well done!' if result1 == result2 else 'we have a problem...')
