@@ -29,14 +29,14 @@ line = 'mtMmEZUOmcqWiryMQhhTxqKdSTKCYEJlEZCsGAMkgA' \
        'UWgsKQrDOeZoNlZNRvHnLgCmysUeKnVJXPFIzvdDyle'\
        'XylnKBfLCjLHntltignbQoiQzTYwZAiRwycdlHfyHNGmkNqSwXUrxGC'
 
-pattern1 = '[A-Z][a-z]{2}[A-Z]{2}[A-Z]'
-pattern2 = '[a-z]{2}[A-Z]{2}'
+pattern1 = '[A-Z][a-z]{2}.*?[A-Z]{2}[A-Z]'
+# pattern2 = '[a-z]{2}.*?[A-Z]{2}'
 found = re.findall(pattern1, line)
-found = [' '.join(re.split(pattern2, string)) for string in found]
+# found = [' '.join(re.split(pattern2, string)) for string in found]
 
-result1 = ' '.join(found)
+# result1 = ' '.join(found)
 
-print(result1)
+# print(result1)
+print(found)
 
 # 2----------------------------------------
-
