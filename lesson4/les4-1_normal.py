@@ -2,8 +2,6 @@
 
 import re
 
-# 1------------------------------------------------
-
 line = 'mtMmEZUOmcqWiryMQhhTxqKdSTKCYEJlEZCsGAMkg' \
        'AYEOmHBSQsSUHKvSfbmxULaysmNOGIPHpEMujalp' \
        'PLNzRWXfwHQqwksrFeipEUlTLeclMwAoktKlfUBJHPs' \
@@ -29,19 +27,19 @@ line = 'mtMmEZUOmcqWiryMQhhTxqKdSTKCYEJlEZCsGAMkg' \
        'UWgsKQrDOeZoNlZNRvHnLgCmysUeKnVJXPFIzvdDyleXyln' \
        'KBfLCjLHntltignbQoiQzTYwZAiRwycdlHfyHNGmkNqSwXUrxGc'
 
-pattern1 = '[a-z][A-Z]+[a-z]'
-pattern2 = '[a-z]+'
+# 1------------------------------------------------
 
-found = re.findall(pattern1, line)
-result1 = [' '.join(re.findall(pattern2, letters)) for letters in found]
-result1 = ' '.join(result1)
+pattern = '([a-z])[A-Z]+([a-z])'
+
+found = [' '.join(letters) for letters in re.findall(pattern, line)]
+result1 = ' '.join(found)
 
 # 2------------------------------------------------
 
-i = 0
-last_index_found = 0
 alt_found = []
 ispattern = False
+last_index_found = 0
+i = 0
 
 for letter in line:
     prev_letter = line[line.index(letter, i)-1]
@@ -58,6 +56,10 @@ for letter in line:
         ispattern = False
         last_index_found = i+1
         alt_found.append(letter)
+
+    if i == len(line)-1 and ispattern:
+        alt_found.pop()
+
     i += 1
 
 result2 = ' '.join(alt_found)
