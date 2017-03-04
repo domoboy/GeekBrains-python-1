@@ -42,15 +42,16 @@ ERROR_MSG_1 = 'Ошибка! Формат даты некорректен'
 ERROR_MSG_2 = 'Ошибка! В {} \'{}\' неправильный ввод'
 ERROR_MSG_3 = 'Ошибка! Такой даты не бывает'
 ERROR_MSG_4 = 'Ошибка! В этом месяце нет 31-ого числа'
-REQUIRES_MSG = '\nТребуемый формат: dd.mm.yyyy\nДень(01-31).Месяц(01-12).Год(0001-9999)'
+REQUIRES_MSG = '\nТребуемый формат: dd.mm.yyyy\n' \
+               'День(01-31).Месяц(01-12).Год(0001-9999)'
 CORRECTLY_MSG = 'Дата верна:'
 
 d = date.split('.')
 if len(d) == 3:
     d = {'day': d[0], 'month': d[1], 'year': d[2]}
     if (not len(d['day']) == 2 or
-        not len(d['month']) == 2 or
-        not len(d['year']) == 4):
+       not len(d['month']) == 2 or
+       not len(d['year']) == 4):
             print('{}{}'.format(ERROR_MSG_1, REQUIRES_MSG))
             ERROR_FLAG = 1
 else:
@@ -87,10 +88,10 @@ years.clear()
 
 N = 11
 
-house = [list(enumerate([['room']*x for
-              x in range(99) for
-              y in range(x)], start = (i + 1))) for
-              i in range(1)][0]
+base_house = [['room']*x for x in range(99) for y in range(x)]
+
+house = [list(enumerate(base_house, start=(i+1))) for
+         i in range(1)][0]
 
 room = 1
 for floor in house:
