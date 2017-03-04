@@ -69,6 +69,6 @@ for letter in line:
 
     i += 1
 
-result2 = ' '.join(alt_found)    
+result2 = ' '.join(alt_found)
 
 print('well done!' if result1 == result2 else 'we have a problem...')
