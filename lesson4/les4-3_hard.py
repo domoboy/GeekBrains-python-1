@@ -11,7 +11,12 @@ def arrang_chess(matrix, *adresses):
     for adress in adresses:
         i = 8 - adress[1]
         j = adress[0] - 1
-        matrix[i][j] = 1
+
+        try:
+            matrix[i][j] = 1
+        except IndexError:
+            print('ОШИБКА! Ферзь {} за пределами доски...'.format(adress))
+            return
 
     return matrix
 
@@ -24,12 +29,18 @@ def iscrossing(matrix):
     :matrix: шахматная доска
     '''
     res = 'No'
-    for line in matrix:
-        if line.count(1) != 1:
-            return res
-    for col in list(zip(*matrix)):
-        if col .count(1) != 1:
-            return res
+
+    try:
+        for line in matrix:
+            if line.count(1) != 1:
+                return res
+        for col in list(zip(*matrix)):
+            if col .count(1) != 1:
+                return res
+    except TypeError:
+        res = 'Исправьте адрес и попробуйте снова'
+        return res
+
     res = 'Yes'
 
     return res
@@ -46,10 +57,11 @@ f1, f2, f3, f4, f5, f6, f7, f8 = ((1, 2), (2, 4), (3, 6), (4, 8),
 # Формирование шахматной доски
 chessboard = [[0]*8 for _ in range(8)]
 
-# Раастановка шахмат
+# Раcстановка шахмат
 chessboard = arrang_chess(chessboard, f1, f2, f3, f4, f5, f6, f7, f8)
 
-print('''
+if chessboard:
+    print('''
     1  2  3  4  5  6  7  8
 8  {line1}
 7  {line2}
