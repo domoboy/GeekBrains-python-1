@@ -1,10 +1,11 @@
 import os
+import sys
 import shutil
 
 
 def dir_list():
     '''
-    Скрипт для вывода списка файлов в текущей директории
+    Функция для вывода списка файлов в текущей директории
     '''
     cur_path = os.getcwd()
     list_dir = os.listdir(cur_path)
@@ -13,7 +14,7 @@ def dir_list():
 
 def make_dir(name_dir):
     '''
-    Скрипт для создания директории
+    Функция для создания директории
     '''
     cur_path = os.path.join(os.getcwd(), name_dir)
     try:
@@ -25,7 +26,7 @@ def make_dir(name_dir):
 
 def del_dir(name_dir):
     '''
-    Скрипт для удаления директории
+    Функция для удаления директории
     '''
     cur_path = os.path.join(os.getcwd(), name_dir)
     try:
@@ -34,12 +35,17 @@ def del_dir(name_dir):
     except WindowsError:
         print('Не удаётся найти путь')
 
-def copy_curfile(file_name):
-    '''
-    Скрипт для копирования текущего файла
-    '''
-    file_name_copy = file_name.split('.py').pop(0) + '_copy.py'
-    cur_path_file = os.path.join(os.getcwd(), file_name)
-    shutil.copy(cur_path_file, file_name_copy)
 
-print(copy_curfile('dir_commands.py'))
+def copy_file():
+    '''
+    Функция для копирования текущего файла
+    '''
+    file_name = sys.argv[0]
+    while file_name in os.listdir(os.getcwd()):
+        file_name = file_name.split('.py').pop(0) + '_copy.py'
+    cur_file = os.path.join(os.getcwd(), sys.argv[0])
+    new_file = os.path.join(os.getcwd(), file_name)
+    try:
+        shutil.copy(cur_file, new_file)
+    except:
+        print('Ошибка!')
