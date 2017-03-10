@@ -29,7 +29,7 @@ line = 'mtMmEZUOmcqWiryMQhhTxqKdSTKCYEJlEZCsGAMkgA' \
 
 # 1----------------------------------------
 
-pattern = '([A-Z])[a-z]{2}.*?[A-Z]{2}([A-Z])'
+pattern = '([A-Z])[a-z]{2}.*?[A-Z]{2}([A-Z])'  # (X)xx....XX(X)
 
 found = [' '.join(letters) for letters in re.findall(pattern, line)]
 result1 = ' '.join(found)
