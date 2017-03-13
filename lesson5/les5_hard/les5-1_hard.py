@@ -1,4 +1,4 @@
-#lesson5-1, hard
+# lesson5-1, hard
 
 import os
 import sys
@@ -33,9 +33,8 @@ def cp():
         print("Необходимо указать имя копируемого файла вторым параметром")
         return
     c_file = dir_name
-    count = 1
     while True:
-        c_file = c_file.split('.py').pop(0) + '_copy' + str(count) + '.py'
+        c_file = c_file.split('.py').pop(0) + '_copy.py'
         if c_file not in os.listdir(os.getcwd()):
             break
     cur_path_file = os.path.join(os.getcwd(), dir_name)

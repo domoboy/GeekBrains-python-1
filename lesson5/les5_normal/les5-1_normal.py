@@ -3,6 +3,7 @@
 
 import dir_commands as dc
 
+
 def menu():
     print('Выберете действие (1-4):')
     print('1. Перейти в папку')
