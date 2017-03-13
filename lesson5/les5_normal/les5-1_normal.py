@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 # lesson5-1, normal
 
 import dir_commands as dc
