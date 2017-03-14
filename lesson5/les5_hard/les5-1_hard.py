@@ -46,6 +46,43 @@ def cp():
         print('копирование невозможно!')
 
 
+def rm():
+    if not dir_name:
+        print("Необходимо указать имя удаляемого файла вторым параметром")
+        return
+    confirm = input('Вы действительно хотите удалить\n' \
+                    '"{}"? y/n: '.format(dir_name))
+    if confirm == 'y':
+        rm_file_path = os.path.join(os.getcwd(), dir_name)
+        try:
+            os.remove(rm_file_path)
+            print('Файл {} успешно удалён'.format(dir_name))
+        except WindowsError:
+            print('Невозможно удалить файл {}!\n' \
+                  'такого файла не существует'.format(dir_name))
+
+
+def cd():
+    if not dir_name:
+        print("Необходимо указать полный или относительный путь\n" \
+              "к нужной директории вторым параметром")
+        return
+    
+    if os.path.exists(dir_name):
+        dir_path = dir_name
+    else:
+        dir_path = os.path.join(os.getcwd(), dir_name)
+    try:
+        os.chdir(dir_path)
+        print('Директория изменина')
+    except WindowsError:
+        print('Директории {}\n не существует!'.format(dir_name))
+
+
+def ls():
+    abs_dir_path = os.path.abspath(os.getcwd())
+    print('Полный путь:\n{}'.format(abs_dir_path))
+
 def ping():
     print("pong")
 
@@ -53,6 +90,9 @@ do = {
     "help": print_help,
     "mkdir": make_dir,
     "cp": cp,
+    "rm": rm,
+    "cd": cd,
+    "ls": ls,
     "ping": ping
 }
 
