@@ -29,15 +29,13 @@ class Trapeze:
         else:
             p = self.perimeter() / 2
             return round((self.BC + self.DA)/abs(self.DA - self.BC) *
-                         math.sqrt((p-self.DA)*(p-self.BC)*(p-self.DA-self.AB)*
+                         math.sqrt((p-self.DA)*(p-self.BC) *
+                                   (p-self.DA-self.AB) *
                                    (p-self.DA-self.CD)), 2)
 
 
 trap = Trapeze((-4, 1), (-2, 3), (3, 3), (5, 2))
 
-print('Трапеция с основаниями DA и BC\nявляется равнобокой: {0}\n' \
-      'с Площадью {1} кв.см и Периметром {2} ' \
+print('Трапеция с основаниями DA и BC\nявляется равнобокой: {0}\n'
+      'с Площадью {1} кв.см и Периметром {2} '
       'см'.format(trap.isosceles(), trap.area(), trap.perimeter()))
-
-            
-        

@@ -12,9 +12,25 @@ class School:
         classes = set([student.get_class_room for student in self._students])
         return list(sorted(classes, key=lambda x: int(x[:-1])))
 
-    def get_students(self, class_room):
+    def get_students(self, class_rooms):
         return [student.get_short_name for student in self._students if
-                class_room == student.get_class_room]
+                class_rooms == student.get_class_room]
+
+    def find_student(self, student_full_name):
+        for person in self._students:
+            if student_full_name == person.get_full_name:
+                teachers = [teachers.get_full_name for teachers in
+                            self._teachers if person.get_class_room in
+                            teachers.get_classes]
+                lessons = [teachers.get_courses for teachers in
+                           self._teachers if person.get_class_room in
+                           teachers.get_classes]
+                return {
+                    'full_name': student_full_name,
+                    'class_room': person.get_class_room,
+                    'teachers': teachers,
+                    'lessons': lessons
+                    }
 
     @property
     def name(self):
@@ -41,8 +57,8 @@ class People:
     @property
     def get_short_name(self):
         return '{0} {1}.{2}.'.format(self._last_name,
-                                      self._first_name[:1],
-                                      self._middle_name[:1])
+                                     self._first_name[:1],
+                                     self._middle_name[:1])
 
 
 class Student(People):
@@ -58,6 +74,7 @@ class Student(People):
     @property
     def get_class_room(self):
         return self._class_room
+
     @property
     def get_parents(self):
         return self._parents
@@ -65,14 +82,15 @@ class Student(People):
 
 class Teacher(People):
     def __init__(self, last_name, first_name, middle_name,
-                 course, classes):
+                 courses, classes):
         People.__init__(self, last_name, first_name, middle_name)
-        self._course = course
+        self._courses = courses
         self._classes = classes
 
     @property
-    def get_course(self):
-        return self._course
+    def get_courses(self):
+        return self._courses
+
     @property
     def get_classes(self):
         return self._classes
@@ -135,10 +153,21 @@ students = [
     ]
 
 
-school = School('Гимназия №8', '630068, г.Новосибирск, ул.Ученическая 8', teachers, students)
+school = School('Гимназия №8', '630068, г.Новосибирск, '
+                'ул.Ученическая 8', teachers, students)
 
 print(school.name)
 print(school.adress)
 
+print('\nСписок классов школы:')
+print(', '.join(school.get_all_classes()))
 
+print('\nСписок "10Б" класса:')
+print('\n'.join(school.get_students('10Б')))
 
+student = school.find_student('Юрин Александр Александрович')
+print('\nУченик: {0}\nУчебный класс: "{1}"\n'
+      'Учителя: {2}\nПредметы: {3}'.format(student['full_name'],
+                                           student['class_room'],
+                                           ', '.join(student['teachers']),
+                                           ', '.join(student['lessons'])))
