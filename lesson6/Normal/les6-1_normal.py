@@ -12,24 +12,31 @@ class School:
         classes = set([student.get_class_room for student in self._students])
         return list(sorted(classes, key=lambda x: int(x[:-1])))
 
-    def get_students(self, class_rooms):
+    def get_students(self, class_room):
         return [student.get_short_name for student in self._students if
-                class_rooms == student.get_class_room]
+                class_room == student.get_class_room]
+
+    def get_teachers(self, class_room):
+        return [teacher.get_short_name for teacher in self._teachers if
+                class_room in teacher.get_classes]
 
     def find_student(self, student_full_name):
         for person in self._students:
             if student_full_name == person.get_full_name:
-                teachers = [teachers.get_full_name for teachers in
+                teachers = [teachers.get_short_name for teachers in
                             self._teachers if person.get_class_room in
                             teachers.get_classes]
                 lessons = [teachers.get_courses for teachers in
                            self._teachers if person.get_class_room in
                            teachers.get_classes]
+                parents = person.get_parents
+                
                 return {
                     'full_name': student_full_name,
                     'class_room': person.get_class_room,
                     'teachers': teachers,
-                    'lessons': lessons
+                    'lessons': lessons,
+                    'parents': parents
                     }
 
     @property
@@ -171,3 +178,9 @@ print('\nУченик: {0}\nУчебный класс: "{1}"\n'
                                            student['class_room'],
                                            ', '.join(student['teachers']),
                                            ', '.join(student['lessons'])))
+
+print('Родители: {0}, {1}'.format(student['parents']['mather'],
+                                   student['parents']['father']))
+
+print('\nКласс: "8А"\nПреподаватели: '
+      '{0}'.format(', '.join(school.get_teachers('8А'))))
