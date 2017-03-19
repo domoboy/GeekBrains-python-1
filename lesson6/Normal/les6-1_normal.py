@@ -30,7 +30,7 @@ class School:
                            self._teachers if person.get_class_room in
                            teachers.get_classes]
                 parents = person.get_parents
-                
+
                 return {
                     'full_name': student_full_name,
                     'class_room': person.get_class_room,
