@@ -1,3 +1,6 @@
+# Классы и функции для расчёта зарплаты сотрудникам
+
+
 class Person:
     def __init__(self, string):
         self._full_name = {
@@ -16,7 +19,8 @@ class Person_Card(Person):
         self._data = {
             'cash': string.split()[2],
             'job': string.split()[3],
-            'norm': string.split()[4]
+            'norm': string.split()[4],
+            'real_cash': None
         }
 
     @property
@@ -27,7 +31,9 @@ class Person_Card(Person):
 class Person_Work(Person):
     def __init__(self, string):
         Person.__init__(self, string)
-        self._fact_work = string.split()[2]
+        self._fact_work = {
+            'worked': string.split()[2]
+            }
 
     @property
     def get_fact_work(self):
@@ -35,10 +41,23 @@ class Person_Work(Person):
 
 
 def parse_file(file, obj):
+    '''
+    Возвращает список из объектов,
+    из каждой строки файла
+    '''
     with open(file, encoding='UTF-8') as lister:
         elems = [obj(elem) for elem in lister][1:]
         return elems
 
 
 def join_tab(elems1, elems2):
-    pass
+    '''
+    Возвращает общий объект из соответсвующих
+    друг другу объектов из двух списков
+    '''
+    join_obj = [elems for elems in elems1]
+    for elem in join_obj:
+        for el in elems2:
+            if elem.get_full_name == el.get_full_name:
+                elem.get_card.update(el.get_fact_work)
+    return join_obj
