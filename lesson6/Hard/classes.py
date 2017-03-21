@@ -10,7 +10,7 @@ class Person:
 
     @property
     def get_full_name(self):
-        return self._full_name
+        return self._full_name['name'] + ' ' + self._full_name['last_name']
 
 
 class Person_Card(Person):
@@ -26,6 +26,9 @@ class Person_Card(Person):
     @property
     def get_card(self):
         return self._data
+
+    def get_real_cash(self):
+        return self._data['real_cash']
 
 
 class Person_Work(Person):

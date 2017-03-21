@@ -1,6 +1,8 @@
 # lesson6-1, hard
-import classes as cl
+import classes as cls
 
+def string_result(res):
+    return '{0:<16} {1} руб.'.format(res.get('name'), res.get('real_cash'))
 
 def res_pay(obj):
     '''
@@ -11,28 +13,21 @@ def res_pay(obj):
     worked = float(obj.get_card['worked'])
     norm_cash_h = cash / norm
     
-    if norm == worked:
-        obj.get_card['real_cash'] = cash
+    obj.get_card['real_cash'] = round(norm_cash_h * worked if
+                                      norm > worked else
+                                      cash + (worked - norm)*(norm_cash_h*2), 2)
 
-    if norm > worked:
-        obj.get_card['real_cash'] = norm_cash_h * worked
+    return {'name': obj.get_full_name,
+            'real_cash': obj.get_real_cash()
+            }
 
-    if norm < worked:
-        obj.get_card['real_cash'] = cash + (worked - norm)*(norm_cash_h*2)
+workers = cls.parse_file('workers.txt', cls.Person_Card)
+fact = cls.parse_file('hourse_of.txt', cls.Person_Work)
+workers_cash = list(map(res_pay, cls.join_tab(workers, fact)))
 
-    return round(obj.get_card['real_cash'], 2)
+print('РАСЧЁТ СОТРУДНИКОВ:')
+print('\n'.join(list(map(string_result, workers_cash))))
 
-workers = cl.parse_file('workers.txt', cl.Person_Card)
-fact = cl.parse_file('hourse_of.txt', cl.Person_Work)
-
-workers_tab = cl.join_tab(workers, fact)
-
-print('Расчёт сотрудников:\n')
-for worker in workers_tab:
-    worker.get_card['real_cash'] = res_pay(worker)
-    print('{0:<10}{1:<12}{2:<10}руб.'.format(worker.get_full_name['last_name'],
-                                 worker.get_full_name['name'],
-                                 worker.get_card['real_cash']))
     
 
 
