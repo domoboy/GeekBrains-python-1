@@ -1,6 +1,7 @@
 # les7-1, Лото
 import random
 
+
 class Card_Generator:
     '''Генератор карточек -> массив из строк'''
     def __init__(self, N, line, n, empty, char):
@@ -24,7 +25,9 @@ class Card_Generator:
 
     def __next__(self):
         if self.line:
-            line = [random.choice(self.N) for _ in range(self.n)]
+            line = []
+            while len(set(line)) != self.n:
+                line = [random.choice(self.N) for _ in range(self.n)]
             self.N = list(set(self.N) - set(line))
             lines = list(map(lambda x: ' ' + x if len(x) == 1 else x, line[:]))
             lines += [self.char] * self.empty
@@ -34,6 +37,7 @@ class Card_Generator:
         else:
             raise StopIteration
 
+
 class Card:
     '''Карточка игрока'''
     def __init__(self, title):
@@ -42,16 +46,15 @@ class Card:
 
     def __str__(self):
         return '{:-^26}\n{}\n{:-^26}' \
-               ''.format(self._title,
-                         '\n'.join(list(map(lambda x: ' '.join(x), self._card))),
-                         '-')
+               ''.format(self._title, '\n'.join(list(map(lambda x: ' '.join(x),
+                                                         self._card))), '-')
 
     def is_include(self, num):
         '''
         Проверка на совпадение номера
         '''
         return not len([line for line in self._card if str(num) in line]) is 0
-            
+
     def cross_out(self, num):
         '''
         Вычёркинвание совпавшего номера
@@ -62,15 +65,8 @@ class Card:
         return self
 
 
-gamer = Card(' Ваша карточка ')
-cpu = Card(' Карточка компьютера ')
+gamer_card = Card(' Ваша карточка ')
+cpu_card = Card(' Карточка компьютера ')
 
-print(gamer)
-print(cpu)
-
-
-
-
-
-
-
+print(gamer_card)
+print(cpu_card)
