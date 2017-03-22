@@ -2,16 +2,20 @@
 import classes as cls
 
 def string_result(res):
+    '''
+    Формат вывода результата
+    '''
     return '{0:<16} {1} руб.'.format(res.get('name'), res.get('real_cash'))
 
 def res_pay(obj):
     '''
-    Возвращает расчёт сотрудника
+    Возвращает словарь с именем и расчётом
+    по сотруднику
     '''
-    cash = float(obj.get_card['cash'])
-    norm = float(obj.get_card['norm'])
-    worked = float(obj.get_card['worked'])
-    norm_cash_h = cash / norm
+    cash = float(obj.get_card['cash'])  # зарплата
+    norm = float(obj.get_card['norm'])  # норма
+    worked = float(obj.get_card['worked'])  # отработано
+    norm_cash_h = cash / norm  # норма в час
     
     obj.get_card['real_cash'] = round(norm_cash_h * worked if
                                       norm > worked else

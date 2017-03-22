@@ -6,8 +6,7 @@ from math import sqrt
 class Side:
     @staticmethod
     def width(A, B):
-        return round(sqrt(sum(tuple(map(lambda a, b: (b - a)**2,
-                                             A, B)))), 2)
+        return round(sqrt(sum(tuple(map(lambda a, b: (b - a)**2, A, B)))), 2)
 
 
 class Triangle(Side):
@@ -28,14 +27,14 @@ class Triangle(Side):
                      self.sides()['CA'], 2)
 
     def area(self):
-        return round((lambda pp, x, y, z:
-                      sqrt(pp*(pp - x)*(pp - y)*(pp - z)))
+        return round((lambda p, a, b, c:
+                      sqrt(p*(p - a)*(p - b)*(p - c)))
                       (self.perimeter() / 2,
                        self.sides()['AB'],
                        self.sides()['BC'],
                        self.sides()['CA']), 2)
 
-A1, A2, A3 = (2, -5),(-6, 2), (6, -2)
+A1, A2, A3 = (2, -5), (-6, 2), (6, -2)
 
 ABC = Triangle(A1, A2, A3)
 
