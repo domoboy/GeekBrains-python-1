@@ -1,12 +1,12 @@
-# les7-1, Лото
+# Лото-классы
 import random
 
-# N, line, n, empty, char
-class Card_Generator:
+
+class CardGenerator:
     '''Генератор карточек -> массив из строк'''
     def __init__(self, **kwargs):
         '''
-        <N> всего цифр (по кол-ву бочёнков)
+        <N> всего цифр (по кол-ву бочонков)
         <line> количество строк в карточке
         <n> количество клеток в строке
         <empty> количество пустых клеток в строке
@@ -31,18 +31,19 @@ class Card_Generator:
             self.N = list(set(self.N) - set([int(x) for x in line]))
             while line.count(self.char) != self.empty:
                 rand_num = random.choice(line)
-                line = list(map(lambda x: x.replace(rand_num, self.char), line))
+                line = list(map(lambda x: x.replace(rand_num, self.char),
+                            line))
             self.line -= 1
             return line
         else:
             raise StopIteration
 
 
-class Barrel_Generator:
-    '''Генератор для бочёнков'''
+class BarrelGenerator:
+    '''Генератор для бочонков'''
     def __init__(self, N):
         '''
-        <N> количество бочёнков
+        <N> количество бочонков
         '''
         self.N = [_ for _ in range(1, N+1)]
         self.barrel = None
@@ -65,13 +66,18 @@ class Barrel_Generator:
     @property
     def current_number(self):
         return self.barrel
-        
+
 
 class Card:
     '''Карточка игрока'''
     def __init__(self, title):
         self._title = title
-        self._card = list(map(lambda x: x, Card_Generator(N=90, line=3, n=9, empty=4, char='  ')))
+        self._card = list(map(lambda x: x,
+                              CardGenerator(N=90,
+                                            line=3,
+                                            n=9,
+                                            empty=4,
+                                            char='  ')))
 
     def __str__(self):
         return '{:-^26}\n{}\n{:-^26}' \
@@ -82,45 +88,17 @@ class Card:
         '''
         Проверка на совпадение номера
         '''
-        return not len([line for line in self._card if str(num) in line]) is 0
+        return not len([line for line in self._card if
+                       (lambda num: ' ' + str(num) if
+                        len(str(num)) == 1 else str(num)) in line]) is 0
 
     def cross_out(self, num):
         '''
         Вычёркинвание совпавшего номера
-        Возвращает новый объект
+        Возвращает объект
         '''
-        self._card = [list(map(lambda x: x.replace(str(num), ' -'), line)) for
-                      line in self._card[:]]
+        self._card = [list(map(lambda x: x.replace(
+            (lambda num: ' ' + str(num) if len(str(num)) == 1 else str(num)),
+            ' -'), line)) for line in self._card[:]]
+
         return self
-
-
-gamer_card = Card(' Ваша карточка ')
-cpu_card = Card(' Карточка компьютера ')
-barrel = Barrel_Generator(90)
-
-print(gamer_card)
-
-print('\nНовый бочонок: {} (осталось {})\n'.format(next(barrel), barrel.length))
-if gamer_card.is_include(barrel.current_number):
-    gamer_card.cross_out(barrel.current_number)
-
-print(gamer_card)
-
-print('\nНовый бочонок: {} (осталось {})\n'.format(next(barrel), barrel.length))
-if gamer_card.is_include(barrel.current_number):
-    gamer_card.cross_out(barrel.current_number)
-
-print(gamer_card)
-
-print('\nНовый бочонок: {} (осталось {})\n'.format(next(barrel), barrel.length))
-if gamer_card.is_include(barrel.current_number):
-    gamer_card.cross_out(barrel.current_number)
-
-print(gamer_card)
-
-print('\nНовый бочонок: {} (осталось {})\n'.format(next(barrel), barrel.length))
-if gamer_card.is_include(barrel.current_number):
-    gamer_card.cross_out(barrel.current_number)
-
-print(gamer_card)
-
