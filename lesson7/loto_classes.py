@@ -1,5 +1,6 @@
 # Лото-классы
 import random
+import config
 
 
 class CardGenerator:
@@ -41,12 +42,15 @@ class CardGenerator:
 
 class BarrelGenerator:
     '''Генератор для бочонков'''
-    def __init__(self, N):
+    def __init__(self, N=config.N):
         '''
         <N> количество бочонков
         '''
-        self.N = [_ for _ in range(1, N+1)]
-        self.barrel = None
+        try:
+            self.N = [_ for _ in range(1, N+1)]
+            self.barrel = None
+        except TypeError:
+            print('Не удаётся определить число бочонков в мешке')
 
     def __iter__(self):
         return self
@@ -58,39 +62,44 @@ class BarrelGenerator:
             return self.barrel
         else:
             raise StopIteration
+                    
+        @property
+        def length(self):
+            return len(self.N)
 
-    @property
-    def length(self):
-        return len(self.N)
+        @property
+        def current_number(self):
+            return self.barrel
 
-    @property
-    def current_number(self):
-        return self.barrel
-
-
+            
 class Card:
     '''Карточка игрока'''
     def __init__(self, title):
         self._title = title
-        self._card = list(map(lambda x: x,
-                              CardGenerator(N=90,
-                                            line=3,
-                                            n=9,
-                                            empty=4,
-                                            char='  ')))
+        try:
+            self._card = list(map(lambda x: x,
+                                  CardGenerator(N=config.N, line=config.line,
+                                                n=config.n, empty=config.empty,
+                                                char=config.char)))
+        except TypeError:
+            print('Ошибка в параметрах при создании "{}"'.format(self._title))
 
     def __str__(self):
-        return '{:-^26}\n{}\n{:-^26}' \
-               ''.format(self._title, '\n'.join(list(map(lambda x: ' '.join(x),
-                                                         self._card))), '-')
+        try:
+            return '{:-^26}\n{}\n{:-^26}' \
+                   ''.format(self._title, '\n' \
+                             ''.join(list(map(lambda x: ' '.join(x),
+                                                            self._card))), '-')
+        except AttributeError:
+            print('Cоздание карты невозможно!')
 
     def is_include(self, num):
         '''
         Проверка на совпадение номера
         '''
         return not len([line for line in self._card if
-                       (lambda num: ' ' + str(num) if
-                        len(str(num)) == 1 else str(num)) in line]) is 0
+                       (lambda x: ' ' + str(x)
+                        if len(str(x)) == 1 else str(x))(num) in line]) is 0
 
     def cross_out(self, num):
         '''
@@ -98,7 +107,6 @@ class Card:
         Возвращает объект
         '''
         self._card = [list(map(lambda x: x.replace(
-            (lambda num: ' ' + str(num) if len(str(num)) == 1 else str(num)),
-            ' -'), line)) for line in self._card[:]]
-
+                      (lambda x: ' ' + str(x) if len(str(x)) == 1 else
+                       str(x))(num), ' -'), line)) for line in self._card[:]]
         return self
