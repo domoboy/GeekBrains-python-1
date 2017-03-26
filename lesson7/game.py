@@ -36,6 +36,40 @@ def print_step(obj):
     return obj
 
 
+def control_step(obj):
+    try:
+        gamer_unswer = input('Зачеркнуть цифру? ')
+
+        if obj['cpu'].is_include(obj['barrel'].current_number):
+            obj['cpu'].cross_out(obj['barrel'].current_number)
+
+        if gamer_unswer == 'y':
+            if obj['gamer'].is_include(obj['barrel'].current_number):
+                obj['gamer'].cross_out(obj['barrel'].current_number)
+                return True
+            else:
+                print('ВЫ ПРОИГРАЛИ!\nЦифры '
+                      '{} нет на Вашей карте'
+                      ''.format(obj['barrel'].current_number))
+                return False
+        elif gamer_unswer == 'n':
+            if not obj['gamer'].is_include(obj['barrel'].current_number):
+                return True
+            else:
+                print('ВЫ ПРОИГРАЛИ!\nПропущена цифра '
+                      '{}'.format(obj['barrel'].current_number))
+                return False
+        else:
+            raise ValueError
+    except ValueError:
+        print('Введена неизвестная команда')
+        gamer_unswer = input('Для продолжения введите "y" ')
+        if gamer_unswer == 'y':
+            return control_step(obj)
+        else:
+            return False
+
+
 def do_step(obj=get_obj_classes()):
 
     if have_win(obj):
@@ -43,27 +77,13 @@ def do_step(obj=get_obj_classes()):
 
     print_step(obj)
 
-    if obj['cpu'].is_include(obj['barrel'].current_number):
-        obj['cpu'].cross_out(obj['barrel'].current_number)
+    if control_step(obj):
+        return True
 
-    gamer_unswer = input('Зачеркнуть цифру? ')
 
-    if gamer_unswer == 'y':
-        if obj['gamer'].is_include(obj['barrel'].current_number):
-            obj['gamer'].cross_out(obj['barrel'].current_number)
-            return True
-        else:
-            print('ВЫ ПРОИГРАЛИ!\nЦифры '
-                  '{} нет на Вашей карте'.format(obj['barrel'].current_number))
-            return False
-    if gamer_unswer == 'n':
-        if not obj['gamer'].is_include(obj['barrel'].current_number):
-            return True
-        else:
-            print('ВЫ ПРОИГРАЛИ!\nПропущена цифра '
-                  '{}'.format(obj['barrel'].current_number))
-            return False
+def start_game():
+    while True:
+        if not do_step() is True:
+            break
 
-while True:
-    if not do_step() is True:
-        break
+start_game()
