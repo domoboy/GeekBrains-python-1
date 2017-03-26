@@ -4,7 +4,7 @@ import config
 
 
 class CardGenerator:
-    '''Генератор карточек'''
+    '''Генератор карт'''
     def __init__(self, title='Карта',  N=config.N, line=config.line,
                  n=config.n, empty=config.empty, char=config.char):
         '''Инициализируется через config.py
@@ -25,7 +25,7 @@ class CardGenerator:
             self._char = char
             self._lines = list(self)  # массив строк карты
         except TypeError:
-            print('Неверно задан тип параметров конфигурации')
+            print('Неверно заданы параметры конфигурации')
 
     def __iter__(self):
         return self
@@ -82,6 +82,7 @@ class CardGenerator:
         return self
 
     def is_win(self):
+        '''Проверка на победителя'''
         return len(list(filter(lambda x: x.count(' -') != self._n,
                                self._lines))) is 0
 
@@ -112,21 +113,13 @@ class BarrelGenerator:
             return self._barrel
         else:
             raise StopIteration
-                    
-        @property
-        def length(self):
-            return len(self.N)
-
 
     @property
     def length(self):
+        '''Возвращает текущее количество бочонков в мешке'''
         return len(self._N)
 
     @property
     def current_number(self):
+        '''Возвращает текущий выпавший номер бочонка'''
         return self._barrel
-'''
-test = BarrelGenerator()
-print(test)
-print(test.current_number)
-'''
