@@ -1,106 +1,69 @@
-# Игра Лото
-import loto_classes as loto
+# game
+import loto_classes
 
-def game():
-    '''
-    Определяет основные переменные программы
-    : player_card : Объект карты игрока
-    : cpu_card : Объект карты компьютера
-    : barrel : Генератор бочонков
-    : player_count : Счётчик зачеркиваний карты игрока
-    : cpu_count : Счётчик зачёркиваний карты компьютера
-    '''
-    player_card = loto.Card('Ваша карточка')
-    cpu_card = loto.Card('Карточка компьютера')
-    barrel = loto.BarrelGenerator()
 
-    player_count = 0
-    cpu_count = 0
+def get_obj_classes():
+    gamer_card = loto_classes.CardGenerator('Ваша карта')
+    cpu_card = loto_classes.CardGenerator('Карта компьютера')
+    barrel = loto_classes.BarrelGenerator()
+    return {
+        'gamer': gamer_card,
+        'cpu': cpu_card,
+        'barrel': barrel
+    }
 
-    def print_field():
-        '''
-        Печать игрового поля
-        '''
-        nonlocal player_count, cpu_count, player_card, cpu_card, barrel
-        if player_count == 15 and cpu_count == 15:
-            print('Ничья!')
-        if player_count == 15:
-            print('Вы выиграли!')
-        if cpu_count == 15:
-            print('Вы проиграли!\nКомпьютер зачеркнул все цифры на своей карте')
-        if player_count == 15 or cpu_count == 15:
-            print('{0}\n{1}'.format(player_card, cpu_card))
-            start(input('Ещё партию? (y/n) '))
-            return
 
-        try:
-            field  = '\nНовый бочонок {0} (осталось {1})\n' \
-                     '{2}\n{3}'.format(next(barrel), barrel.length,
-                                       player_card, cpu_card)
-            print(field)
-        except TypeError:
-            print('Не удаётся отобразить игровое поле')
-            return
-        except AttributeError:
-            print('Ошибка при создании генератора бочонков')
-            return
-        
+def have_win(obj):
+    win = False
 
-        def do_step():
-            '''
-            Обработка хода игрока и компьютера
-            '''
-            nonlocal player_count, cpu_count, player_card, cpu_card, barrel 
+    if obj['gamer'].is_win() and obj['cpu'].is_win():
+        print('НИЧЬЯ!')
+        return True
+    if obj['gamer'].is_win() and not obj['cpu'].is_win():
+        print('ВЫ ПОБЕДИЛИ!')
+        return True
+    if obj['cpu'].is_win() and not obj['gamer'].is_win():
+        print('ВЫ ПРОИГРАЛИ!\n Компьютер зачеркнул все цифры на своей карте')
+        return True
 
-            user_answer = input('- Зачеркнуть цифру? (y/n) ')
+    return win
 
-            if cpu_card.is_include(barrel.current_number):
-                cpu_card.cross_out(barrel.current_number)
-                cpu_count += 1
 
-            try:
-                if user_answer is 'y':
-                    if player_card.is_include(barrel.current_number):
-                        player_card.cross_out(barrel.current_number)
-                        player_count += 1
-                        print_field()
-                    else:
-                        print('Вы проиграли! На Вашей карте нет числа '
-                              '{}'.format(barrel.current_number))
-                        start(input('Хотите начать заново? (y/n) '))
-                        return
-                elif user_answer is 'n':
-                    if not player_card.is_include(barrel.current_number):
-                        print_field()
-                    else:
-                        print('Вы проиграли! '
-                              'Пропущено число ' \
-                              '{}'.format(barrel.current_number))
-                        start(input('Хотите начать заново? (y/n) '))
-                        return
-                else:
-                    raise TypeError
+def print_step(obj):
+    print('\nНовый бочонок {0} (осталось {1})\n'
+          '{2}\n{3}'.format(obj['barrel'], obj['barrel'].length-1,
+                            obj['gamer'], obj['cpu']))
+    return obj
 
-            except TypeError:
-                print('Введена неизвестная команда "{}"'.format(user_answer))
-                user_answer = input('Для продолжения введите "y" ')
-                if user_answer == 'y':
-                    do_step()
-                else:
-                    return
-        
-        do_step()    
-    
-    print_field()
 
-def start(user_answer='y'):
-    '''
-    Запускает основной код программы
-    в зависимости от ответа игрока
-    '''
-    if user_answer == 'y':
-        game()
-    else:
+def do_step(obj=get_obj_classes()):
+
+    if have_win(obj):
         return
 
-start(input('Добро пожаловать в "Лото"!\n- Начать игру? (y/n) '))
+    print_step(obj)
+
+    if obj['cpu'].is_include(obj['barrel'].current_number):
+        obj['cpu'].cross_out(obj['barrel'].current_number)
+
+    gamer_unswer = input('Зачеркнуть цифру? ')
+
+    if gamer_unswer == 'y':
+        if obj['gamer'].is_include(obj['barrel'].current_number):
+            obj['gamer'].cross_out(obj['barrel'].current_number)
+            return True
+        else:
+            print('ВЫ ПРОИГРАЛИ!\nЦифры '
+                  '{} нет на Вашей карте'.format(obj['barrel'].current_number))
+            return False
+    if gamer_unswer == 'n':
+        if not obj['gamer'].is_include(obj['barrel'].current_number):
+            return True
+        else:
+            print('ВЫ ПРОИГРАЛИ!\nПропущена цифра '
+                  '{}'.format(obj['barrel'].current_number))
+            return False
+
+while True:
+    if not do_step() is True:
+        break
