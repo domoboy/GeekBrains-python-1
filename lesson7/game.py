@@ -4,7 +4,7 @@ import loto_classes
 
 def get_obj_classes():
     '''
-    Возвращает словарь из объектов
+    Возвращает словарь из объектов карт и мешка бочонков
     '''
     gamer_card = loto_classes.CardGenerator('Ваша карта')
     cpu_card = loto_classes.CardGenerator('Карта компьютера')
@@ -120,12 +120,11 @@ def start_game():
             else:
                 print('Выход из программы')
                 break
-            
 
 
 def game_regulations():
     '''
-    Печать справки из файла loto.txt 
+    Печать справки из файла loto.txt
     '''
     with open('loto.txt', encoding='UTF-8') as file:
         print('\n'.join([x.strip() for x in file]))
@@ -154,7 +153,8 @@ def menu():
     try:
         menu[user_answer]()
     except KeyError:
-        print('"{}" неизвестная команда\nВыход из программы'.format(user_answer))
+        print('"{}" неизвестная команда\n'
+              'Выход из программы'.format(user_answer))
 
 
 menu()
