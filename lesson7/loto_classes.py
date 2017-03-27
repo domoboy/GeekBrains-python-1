@@ -83,7 +83,7 @@ class CardGenerator:
 
     def is_win(self):
         '''Проверка на победителя'''
-        return len(list(filter(lambda x: x.count(' -') != self._n,
+        return len(list(filter(lambda x: x.count(' -') != self._n-self._empty,
                                self._lines))) is 0
 
 
