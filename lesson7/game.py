@@ -151,9 +151,10 @@ def menu():
         '2': game_regulations
         }
 
-    for key in menu:
-        if user_answer == key:
-            menu[key]()
+    try:
+        menu[user_answer]()
+    except KeyError:
+        print('"{}" неизвестная команда\nВыход из программы'.format(user_answer))
 
 
 menu()
