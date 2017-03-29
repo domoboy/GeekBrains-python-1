@@ -4,7 +4,8 @@ import loto_classes
 
 def get_obj_classes():
     '''
-    Возвращает словарь из объектов карт и мешка бочонков
+    Возвращает словарь из объектов карт игрока
+    и компьютера, а также мешка с бочонками
     '''
     gamer_card = loto_classes.CardGenerator('Ваша карта')
     cpu_card = loto_classes.CardGenerator('Карта компьютера')
@@ -20,7 +21,7 @@ def have_win(obj):
     '''
     Проверка на поедителя
 
-    obj -- словарь содержащий карты игрока и компьтера,
+    obj -- словарь, содержащий карты игрока и компьтера,
            а также мешок с бочонками
     '''
     win = True
@@ -37,28 +38,42 @@ def have_win(obj):
     return win
 
 
-def print_step(obj):
+def do_step(control_func):
     '''
-    Печать игрового поля
+    Совершение хода
 
-    obj -- словарь содержащий карты игрока и компьтера,
-           а также мешок с бочонками
+    control_func -- функция проверки хода
     '''
-    print('\nНовый бочонок {0} (осталось {1})\n'
-          '{2}\n{3}'.format(obj['barrel'], obj['barrel'].length-1,
-                            obj['gamer'], obj['cpu']))
-    return obj
+    def print_step(obj, repeat=0):
+        '''
+        Отображение игрового поля с вытаскиванием из мешка,
+        нового бочонка, если проверка хода не повторяется
+
+        obj -- словарь, содержащий карты игрока и компьтера,
+               а также мешок с бочонками
+        repeat -- ключ, отменяющий следующий ход для проверки
+                  предыдущего
+        '''
+        if not repeat:
+            if have_win(obj):
+                return False
+            print('\nНовый бочонок {0} (осталось {1})\n'
+              '{2}\n{3}'.format(obj['barrel'], obj['barrel'].length-1,
+                                obj['gamer'], obj['cpu']))
+        return control_func(obj)
+    return print_step
 
 
-def control_step(obj):
+@do_step
+def control_step(obj, repeat=0):
     '''
     Проверка хода игрока
 
-    obj -- словарь содержащий карты игрока и компьтера,
+    obj -- словарь, содержащий карты игрока и компьтера,
            а также мешок с бочонками
     '''
     try:
-        gamer_answer = input('Зачеркнуть цифру? (y/n)')
+        gamer_answer = input('Зачеркнуть цифру? (y/n): ')
 
         if obj['cpu'].is_include(obj['barrel'].current_number):
             obj['cpu'].cross_out(obj['barrel'].current_number)
@@ -82,44 +97,13 @@ def control_step(obj):
         else:
             raise ValueError
     except ValueError:
-        print('Введена неизвестная команда')
-        gamer_answer = input('\nДля продолжения введите "y": ')
+        print('Введена неизвестная команда "{}"'.format(gamer_answer))
+        gamer_answer = input('\nДля продолжения игры введите "y": ')
         if gamer_answer == 'y':
-            return control_step(obj)
+            return control_step(obj, 'try_again')
         else:
             print('Игра завершена...')
             return False
-
-
-def do_step(obj):
-    '''
-    Организует структуру хода
-
-    obj -- словарь содержащий карты игрока и компьтера,
-           а также мешок с бочонками
-    '''
-    if have_win(obj):
-        return False
-
-    print_step(obj)
-
-    if control_step(obj):
-        return True
-
-
-def start_game():
-    '''
-    Контролирует запуск игры, с нужным параметром obj
-    '''
-    obj = get_obj_classes()
-    while True:
-        if not do_step(obj) is True:
-            user_answer = input('\nВведите "y", чтобы начать новую игру: ')
-            if user_answer == 'y':
-                obj = get_obj_classes()
-            else:
-                print('Выход из программы')
-                break
 
 
 def game_regulations():
@@ -134,6 +118,22 @@ def game_regulations():
     else:
         print('Выход из программы')
         return
+
+
+def start_game():
+    '''
+    Контролирует запуск игры, с нужным параметром obj
+    '''
+    obj = get_obj_classes()
+
+    while True:
+        if not control_step(obj) is True:
+            user_answer = input('\nВведите "y", чтобы начать новую игру: ')
+            if user_answer == 'y':
+                obj = get_obj_classes()
+            else:
+                print('Выход из программы')
+                break
 
 
 def menu():
@@ -155,6 +155,5 @@ def menu():
     except KeyError:
         print('"{}" неизвестная команда\n'
               'Выход из программы'.format(user_answer))
-
 
 menu()
