@@ -58,7 +58,7 @@ def control_step(obj):
            а также мешок с бочонками
     '''
     try:
-        gamer_answer = input('Зачеркнуть цифру? ')
+        gamer_answer = input('Зачеркнуть цифру? (y/n)')
 
         if obj['cpu'].is_include(obj['barrel'].current_number):
             obj['cpu'].cross_out(obj['barrel'].current_number)
